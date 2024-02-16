@@ -21,7 +21,7 @@ const registerUser = async (req, res) => {
       email: user.email,
       verified: user.verified,
       admin: user.admin,
-      token: null
+      token: await user.generateJWT()
     })
 	} catch (error) {
     console.error(error);
