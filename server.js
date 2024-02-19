@@ -1,7 +1,9 @@
+// require('module-alias/register')
 import dotevn from 'dotenv';
 import cors from 'cors';
 import express from 'express';
 import { connectDB } from './config/connectDB.js';
+import { errorResponseHandler, invalidPathHandler } from './middleware/errorHandler.js';
 
 //Routes
 import userRoutes from './routes/userRoutes.js'
@@ -18,5 +20,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', userRoutes);
+app.use(invalidPathHandler);
+app.use(errorResponseHandler);
+
 
 app.listen(PORT, console.log(`listening on port: ${PORT}`));
