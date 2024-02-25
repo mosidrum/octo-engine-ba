@@ -11,6 +11,8 @@ import {
 
 //Routes
 import userRoutes from './routes/userRoutes.js';
+import postRoutes from './routes/postRoutes.js';
+
 import { fileURLToPath } from 'url';
 
 dotevn.config();
@@ -32,6 +34,7 @@ const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
 app.use(invalidPathHandler);
 app.use(errorResponseHandler);
 

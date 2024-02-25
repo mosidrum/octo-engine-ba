@@ -1,6 +1,9 @@
 import bcrypt from 'bcryptjs';
 import { Schema, model } from 'mongoose';
 import jwt from 'jsonwebtoken';
+import dotevn from 'dotenv';
+
+dotevn.config();
 
 const UserSchema = new Schema(
 	{
