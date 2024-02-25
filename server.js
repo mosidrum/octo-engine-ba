@@ -3,6 +3,7 @@ import dotevn from 'dotenv';
 import cors from 'cors';
 import express from 'express';
 import { connectDB } from './config/connectDB.js';
+import path from 'path';
 import {
 	errorResponseHandler,
 	invalidPathHandler,
@@ -10,6 +11,7 @@ import {
 
 //Routes
 import userRoutes from './routes/userRoutes.js';
+import { fileURLToPath } from 'url';
 
 dotevn.config();
 connectDB();
@@ -22,6 +24,12 @@ app.use(express.json());
 app.get('/', (req, res) => {
 	res.send('Welcome to blog app api');
 });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// static files
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use('/api/users', userRoutes);
 app.use(invalidPathHandler);
