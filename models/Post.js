@@ -35,5 +35,12 @@ const PostSchema = new Schema(
 	{ timestamps: true }
 );
 
+//creating a reference to the comment schema
+PostSchema.virtual('comments', {
+  ref: "Comment", //model to pupalte data from
+  localField: '_id',
+  foreignField: 'postId'
+})
+
 const Post = model('Post', PostSchema);
 export default Post;
