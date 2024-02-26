@@ -32,14 +32,14 @@ const PostSchema = new Schema(
 		},
 		categories: [{ type: Schema.Types.ObjectId, ref: 'PostCategories' }],
 	},
-	{ timestamps: true }
+	{ timestamps: true, toJSON: {virtuals: true} }
 );
 
 //creating a reference to the comment schema
 PostSchema.virtual('comments', {
   ref: "Comment", //model to pupalte data from
   localField: '_id',
-  foreignField: 'postId'
+  foreignField: 'post'
 })
 
 const Post = model('Post', PostSchema);

@@ -28,7 +28,7 @@ UserSchema.pre('save', async function (next) {
 
 UserSchema.methods.generateJWT = async function () {
 	return await jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-		expiresIn: '30m',
+		expiresIn: '2hr',
 	});
 };
 
