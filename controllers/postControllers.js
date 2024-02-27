@@ -111,12 +111,12 @@ const getPost = async (req, res, next) => {
 						path: 'user',
 						select: ['avatar', 'name'],
 					},
-          {
-            path: 'replies',
-            match: {
-              check: true
-            }
-          }
+					{
+						path: 'replies',
+						match: {
+							check: true,
+						},
+					},
 				],
 			},
 		]);
@@ -131,7 +131,12 @@ const getPost = async (req, res, next) => {
 };
 
 const getAllPost = async (req, res, next) => {
-	const posts = await Post.find({});
+	const posts = await Post.find({}).populate([
+		{
+			path: 'user',
+			selec: ['avatar', 'name', 'verified'],
+		}
+	]);
 	return res.json(posts);
 };
 
