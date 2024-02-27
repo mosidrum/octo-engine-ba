@@ -102,9 +102,22 @@ const getPost = async (req, res, next) => {
 			},
 			{
 				path: 'comments',
-        match: {
-          check: true,
-        }
+				match: {
+					check: true,
+					parent: null,
+				},
+				populate: [
+					{
+						path: 'user',
+						select: ['avatar', 'name'],
+					},
+          {
+            path: 'replies',
+            match: {
+              check: true
+            }
+          }
+				],
 			},
 		]);
 		if (!post) {
