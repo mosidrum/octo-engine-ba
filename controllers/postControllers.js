@@ -116,6 +116,12 @@ const getPost = async (req, res, next) => {
 						match: {
 							check: true,
 						},
+						populate: [
+							{
+								path: 'user',
+								select: ['avatar', 'name'],
+							},
+						],
 					},
 				],
 			},
@@ -134,10 +140,10 @@ const getAllPost = async (req, res, next) => {
 	const posts = await Post.find({}).populate([
 		{
 			path: 'user',
-			selec: ['avatar', 'name', 'verified'],
+			select: ['avatar', 'name', 'verified'],
 		}
 	]);
 	return res.json(posts);
 };
 
-export { createPost, updatePost, deletePost, getPost, getAllPost };
+export { createPost, updatePost, deletePost, getPost, getAllPost }

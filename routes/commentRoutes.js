@@ -1,8 +1,16 @@
 import express from 'express';
 import { authGuard } from '../middleware/authMiddleware.js';
-import { createComment } from '../controllers/commentControllers.js';
+import {
+	createComment,
+	deleteComment,
+	updateComment,
+} from '../controllers/commentControllers.js';
 
 const router = express.Router();
-router.post('/', authGuard, createComment);
+router
+	.route('/')
+	.post(authGuard, createComment)
+	.delete(authGuard, deleteComment);
+router.put('/updateComment', authGuard, updateComment);
 
 export default router;
