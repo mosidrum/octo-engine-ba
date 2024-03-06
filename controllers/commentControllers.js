@@ -39,7 +39,7 @@ const updateComment = async (req, res, next) => {
 			const error = new Error('Comment does not belong to you');
 			return next(error);
 		}
-		comment.desc = desc;
+		comment.desc = desc || comment.desc;
 		const updatedComment = await comment.save();
 		return res.json(updatedComment);
 	} catch (error) {
@@ -50,9 +50,9 @@ const updateComment = async (req, res, next) => {
 const deleteComment = async (req, res, next) => {
 	try {
 		const { commentId, userId } = req.body;
-    console.log(commentId);
-		const comment = await Comment.findOne({ _id: commentId });
-    console.log(comment);
+		const comment = await Comment.findByIdAndDelete({ _id: commentId });
+		await Comment.deleteMany({ parent: comment._id });
+
 		if (!comment) {
 			const error = new Error('Comment was not found');
 			return next(error);
@@ -61,9 +61,9 @@ const deleteComment = async (req, res, next) => {
 			const error = new Error('Comment does not belong to you');
 			return next(error);
 		}
-		const deletedComment = await Comment.deleteOne({ _id: commentId });
-    console.log(deletedComment);
-		return res.json(deletedComment);
+		return res.json({
+			message: 'Comment deleted successfully',
+		});
 	} catch (error) {
 		next(error);
 	}
