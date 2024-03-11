@@ -1,6 +1,7 @@
 import { uploadPicture } from '../middleware/uploadPictureMiddleware.js';
 import User from '../models/User.js';
 import { fileRemover } from '../utils/fileRemover.js';
+import Post from "../models/Post.js";
 
 const registerUser = async (req, res, next) => {
 	try {
@@ -161,7 +162,36 @@ const updateProfilePicture = async (req, res, next) => {
 	}
 };
 
+const adminUser = async (req, res, next) => {
+	try {
+		const user = await User.findById({ _id: req.params.id });
+		console.log(user);
+
+		if (!user) {
+			let error = new Error('User not found');
+			error.statusCode = 404;
+			return next(error);
+		}
+
+		// Destructure only if user exists
+		const { avatar, admin, email, verified, name, _id } = user;
+
+		return res.status(200).json({
+			_id,
+			avatar,
+			name,
+			email,
+			verified,
+			admin,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+
 export {
+	adminUser,
 	registerUser,
 	loginUser,
 	userProfile,

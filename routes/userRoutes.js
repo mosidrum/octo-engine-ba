@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+	adminUser,
 	loginUser,
 	registerUser,
 	updateProfile,
@@ -13,6 +14,7 @@ const router = express.Router();
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/profile', authGuard, userProfile);
+router.get('/admin/:id', authGuard, adminUser);
 router.put('/updateProfile', authGuard, updateProfile)
 router.put('/updateProfilePicture', authGuard, updateProfilePicture)
 
