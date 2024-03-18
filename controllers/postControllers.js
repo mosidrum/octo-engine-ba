@@ -143,7 +143,8 @@ const getAllPost = async (req, res, next) => {
 			select: ['avatar', 'name', 'verified'],
 		}
 	]);
-	return res.json(posts);
+	const totalCount = await Post.countDocuments({});
+	return res.json({ posts, totalCount });
 };
 
 export { createPost, updatePost, deletePost, getPost, getAllPost }
